@@ -10,6 +10,7 @@
 
     # start server 
     public
+    Public.js server running with "/path/to/./" on port 3000
 
     # start server with option
     public test 3030
