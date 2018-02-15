@@ -79,7 +79,7 @@ if (path) {
       if (err) {
         res.writeHead(200, { 'Content-Type': 'text/html' });
         // Index files if 404 or directory
-        if ([2, 21, 28, -1].indexOf(err.errno) < 0) {
+        if ([2, 21, 28, -1, -21].indexOf(err.errno) < 0) {
           res.write(['<h1>', res.message, '</h1>'].join(''));
           res.end(['<pre>', JSON.stringify(err, null, '  '), '</pre>'].join(''));
           return;
