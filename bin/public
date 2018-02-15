@@ -67,6 +67,7 @@ switch (args[0]) {
       }
     }
 }
+var root = path.resolve(dir);
 
 if (path) {
   http.createServer(function(req, res) {
@@ -75,6 +76,13 @@ if (path) {
     var base = filePath.replace(dir, ''); // Base path for browser link
     var abs = path.resolve(filePath); 
     console.log(new Date().toString(), abs);
+
+    if (abs.indexOf(root) !== 0) {
+      res.writeHead(403, { 'Content-Type': 'text/plain' });
+      res.end('Forbidden\n');
+      return;
+    }
+
     fs.readFile(filePath, function(err, data) {
       if (err) {
         res.writeHead(200, { 'Content-Type': 'text/html' });
