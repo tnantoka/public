@@ -69,10 +69,28 @@ switch (args[0]) {
 }
 var root = path.resolve(dir);
 
+function escapeHTML(text) {
+  return text.replace(/&/g, '&amp;')
+             .replace(/</g, '&lt;')
+             .replace(/>/g, '&gt;')
+             .replace(/"/g, '&quot;')
+             .replace(/'/g, '&#039;');
+}
+
+function unescapeHTML(text) {
+  return text.replace(/&amp;/g, '&')
+             .replace(/&lt;/g, '<')
+             .replace(/&gt;/g, '>')
+             .replace(/&quot;/g, '"')
+             .replace(/&#039;/g, "'");
+}
+
+
 if (path) {
   http.createServer(function(req, res) {
     var pathname = url.parse(req.url).pathname;
-    var filePath = path.join(dir, pathname); // Real file path
+    var decoded = decodeURIComponent(pathname);
+    var filePath = path.join(dir, unescapeHTML(decoded)); // Real file path
     var base = filePath.replace(dir, ''); // Base path for browser link
     var abs = path.resolve(filePath); 
     console.log(new Date().toString(), abs);
@@ -104,7 +122,7 @@ if (path) {
             var list = ['<ul>'];
             files.unshift('..');
             files.forEach(function(file) {
-              list.push('<li><a href="', path.join(base, file),'">', file, '</a></li>');
+              list.push('<li><a href="', path.join(base, escapeHTML(file)),'">', escapeHTML(file), '</a></li>');
             });
             list.push('</ul>');
             res.write(['<h1>', 'Index of "', abs, '"</h1>'].join(''));
