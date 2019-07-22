@@ -1,4 +1,4 @@
-# public.js
+# [deprecated] public.js
 
   Run static file hosting server with specified public dir & port.
   Support a "direcotry index" like Apache httpd.
