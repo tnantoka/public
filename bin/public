@@ -131,7 +131,7 @@ if (path) {
         }
         return;
       }
-      res.writeHead(200, { 'Content-Type': mime.lookup(filePath) });
+      res.writeHead(200, { 'Content-Type': mime.getType(filePath) });
       res.end(data);
     });
   }).listen(port, function() {
